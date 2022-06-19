@@ -10,8 +10,7 @@ static const R_CallMethodDef callMethods[] = {
 
   // Window-related functions
   {"R_getValidSigrts",         (DL_FUNC) &R_getValidSigrts,         0},
-  {"R_setupSIGRTflag",         (DL_FUNC) &R_setupSIGRTflag,         1},
-  {"R_checkSIGRTflag",         (DL_FUNC) &R_checkSIGRTflag,         0},
+  {"R_sendSigrt",              (DL_FUNC) &R_sendSigrt,              2},
 
   {NULL, NULL, 0}};
 

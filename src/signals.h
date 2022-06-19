@@ -6,7 +6,6 @@
 #include <signal.h>
 
 SEXP R_getValidSigrts();
-SEXP R_setupSIGRTflag(SEXP r_signum);
-SEXP R_checkSIGRTflag();
+SEXP R_sendSigrt(SEXP r_pid, SEXP r_signum);
 
 #endif

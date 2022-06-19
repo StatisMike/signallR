@@ -1,12 +1,7 @@
 #include <R.h>
 #include <Rinternals.h>
 #include <signal.h>
-
-static volatile sig_atomic_t flag = -1;
-
-void handler (int signum) {
-  flag++;
-}
+#include <errno.h>
 
 // get all valid signal integers
 SEXP R_getValidSigrts() {
@@ -26,37 +21,25 @@ SEXP R_getValidSigrts() {
 
 }
 
-// setup signal flag
-SEXP R_setupSIGRTflag(SEXP r_signum) {
+// send signal to another process
+SEXP R_sendSigrt(SEXP r_pid, SEXP r_signum) {
 
   int signum = Rf_asInteger(r_signum);
-
-  struct sigaction action;
-  memset(&action, 0, sizeof(action));
-  action.sa_handler = handler;
-  sigaction(signum, &action, NULL);
-  flag = 0;
-  return R_NilValue;
-
-}
-
-// check signal flag
-SEXP R_checkSIGRTflag() {
-
-  // int signum = Rf_asInteger(r_signum);
-
+  int pid = Rf_asInteger(r_pid);
   int out;
-  switch(flag) {
-  case -1:
-    out = NA_LOGICAL;
-    break;
-  case 0:
-    out = FALSE;
-    break;
-  default:
-    out = TRUE;
+
+  errno = 0;
+  int ret = kill(pid, signum);
+  if (ret == -1) {
+    if (errno == EPERM)
+      out = -1;
+    else if (errno == ESRCH)
+      out = -2;
+    else
+      out = 0;
+  } else {
+    out = 1;
   }
 
-  return Rf_ScalarLogical(out);
-
+  return Rf_ScalarInteger(out);
 }

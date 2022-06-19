@@ -2,5 +2,6 @@
 
 export(SIGRT_check)
 export(SIGRT_listen)
+export(SIGRT_send)
 export(get_SIGRTs)
 useDynLib(signallR, .registration = TRUE, .fixes = ".C_")

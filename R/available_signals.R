@@ -5,7 +5,8 @@
 #' @export
 get_SIGRTs <- function() {
 
-  avail_SIGRTs <- data.frame(nums = .Call(.C_R_getValidSigrts))
+  avail_SIGRTs <- data.frame(nums = .Call(.C_R_getValidSigrts,
+                                          PACKAGE = "signallR"))
 
   avail_SIGRTs[["SIGRTMIN"]] <-
     sapply(seq_along(avail_SIGRTs$nums), \(i) {
