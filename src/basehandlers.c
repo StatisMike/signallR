@@ -27,7 +27,7 @@ void SIGRT_base5_handler (int signum) {
 }
 
 // Create precompiled sigactions
-SEXP R_reg_listener_base1 (SEXP r_signum) {
+SEXP R_regListener1Base (SEXP r_signum) {
 
   int signum = Rf_asInteger(r_signum);
 
@@ -40,7 +40,7 @@ SEXP R_reg_listener_base1 (SEXP r_signum) {
 
 }
 
-SEXP R_reg_listener_base2 (SEXP r_signum) {
+SEXP R_regListener2Base (SEXP r_signum) {
 
   int signum = Rf_asInteger(r_signum);
 
@@ -53,7 +53,7 @@ SEXP R_reg_listener_base2 (SEXP r_signum) {
 
 }
 
-SEXP R_reg_listener_base3 (SEXP r_signum) {
+SEXP R_regListener3Base (SEXP r_signum) {
 
   int signum = Rf_asInteger(r_signum);
 
@@ -66,7 +66,7 @@ SEXP R_reg_listener_base3 (SEXP r_signum) {
 
 }
 
-SEXP R_reg_listener_base4 (SEXP r_signum) {
+SEXP R_regListener4Base (SEXP r_signum) {
 
   int signum = Rf_asInteger(r_signum);
 
@@ -79,7 +79,7 @@ SEXP R_reg_listener_base4 (SEXP r_signum) {
 
 }
 
-SEXP R_reg_listener_base5 (SEXP r_signum) {
+SEXP R_regListener5Base (SEXP r_signum) {
 
   int signum = Rf_asInteger(r_signum);
 
@@ -93,7 +93,7 @@ SEXP R_reg_listener_base5 (SEXP r_signum) {
 }
 
 // Create precompiled checkers
-SEXP R_sig_checker_base1 (SEXP r_refresh) {
+SEXP R_sigChecker1Base (SEXP r_refresh) {
 
   int refresh = Rf_asInteger(r_refresh);
   int out = SIGRT_base1_flag;
@@ -104,7 +104,7 @@ SEXP R_sig_checker_base1 (SEXP r_refresh) {
   return Rf_ScalarInteger(out);
 }
 
-SEXP R_sig_checker_base2 (SEXP r_refresh) {
+SEXP R_sigChecker2Base (SEXP r_refresh) {
 
   int refresh = Rf_asInteger(r_refresh);
   int out = SIGRT_base2_flag;
@@ -115,7 +115,7 @@ SEXP R_sig_checker_base2 (SEXP r_refresh) {
   return Rf_ScalarInteger(out);
 }
 
-SEXP R_sig_checker_base3 (SEXP r_refresh) {
+SEXP R_sigChecker3Base (SEXP r_refresh) {
 
   int refresh = Rf_asInteger(r_refresh);
   int out = SIGRT_base3_flag;
@@ -126,7 +126,7 @@ SEXP R_sig_checker_base3 (SEXP r_refresh) {
   return Rf_ScalarInteger(out);
 }
 
-SEXP R_sig_checker_base4 (SEXP r_refresh) {
+SEXP R_sigChecker4Base (SEXP r_refresh) {
 
   int refresh = Rf_asInteger(r_refresh);
   int out = SIGRT_base4_flag;
@@ -137,7 +137,7 @@ SEXP R_sig_checker_base4 (SEXP r_refresh) {
   return Rf_ScalarInteger(out);
 }
 
-SEXP R_sig_checker_base5 (SEXP r_refresh) {
+SEXP R_sigChecker5Base (SEXP r_refresh) {
 
   int refresh = Rf_asInteger(r_refresh);
   int out = SIGRT_base5_flag;

@@ -11,5 +11,17 @@ data.frame
 }
 \description{
 Data.frame containing all available Real-Time UNIX signals:
-their number as well as their name as "SIGRTMIN" and "SIGRTMAX"
+their numeric value as well as their name as "SIGRTMIN" and "SIGRTMAX".
+
+It's safest to refer to them by their name, not number - particularly if
+R process will be also run on another unix systems: numeric values of
+signals can vary from system to system, whether the names are more stable.
+
+Signals closest to "SIGRTMIN" and "SIGRTMAX' are more likely to be available
+between systems.
+}
+\examples{
+# Get the table of available SIGRT signals on your system
+str(SIGRT_get())
+head(SIGRT_get())
 }

@@ -5,7 +5,8 @@
 #' or name beginning with "SIGRTMIN" or "SIGRTMAX".
 #' @param pid *integer* with PID of the receiving process. Defaults to value of
 #' `Sys.getpid()`, sending signal to current process.
-#' @param retrun *boolean* indicating if signal have been sent
+#' @return *boolean* indicating if signal have been sent
+#' @example examples/SIGRT_basics.R
 #' @export
 SIGRT_send <- function(signal, pid = Sys.getpid()) {
 

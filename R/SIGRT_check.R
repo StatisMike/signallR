@@ -6,10 +6,14 @@
 #' this function - it installs the custom handler for specified signal.
 #'
 #' As available SIGRT signals vary from system to system, you can check the
-#' list of available signals with [get_SIGRTs()].
+#' list of available signals with [SIGRT_get()].
+#'
+#' Five slots for SIGRT signals to listen for are precompiled. To use more than
+#' five, `inline` package needs to be installed in the system.
 #'
 #' @return boolean indicating if initializing procedure have been completed.
 #' `FALSE` means that the listening procedure have been intialized before
+#' @example /examples/SIGRT_basics.R
 #' @export
 
 SIGRT_listen <- function(signal) {
@@ -46,8 +50,9 @@ SIGRT_listen <- function(signal) {
 #' Check if chosen signal have been received
 #' @param signal Valid UNIX SIGRT signal to listen for. Either its integer value
 #' or name beginning with "SIGRTMIN" or "SIGRTMAX".
-#' @param *boolean* indicating if the flag for given signal should be set to `0`
-#' after check
+#' @param refresh *boolean* indicating if the flag for given signal should be set to `0`
+#' after making the check
+#' @example /examples/SIGRT_basics.R
 #' @export
 
 SIGRT_check <- function(signal, refresh = F) {

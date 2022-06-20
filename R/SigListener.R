@@ -1,4 +1,4 @@
-#' @title SIGRT litener
+#' @title SIGRT listener
 #' @noRd
 
 SigListener <- R6::R6Class(
@@ -41,10 +41,11 @@ SigListener <- R6::R6Class(
     #' @param signum signal number to register handler for
     register_check = function(i, signum) {
 
-      hand_name <- paste0(".C_R_reg_listener_base", i)
-      check_name <- paste0(".C_R_sig_checker_base", i)
+      hand_name <- paste0(".C_R_regListener", i, "Base")
+      check_name <- paste0(".C_R_sigChecker", i, "Base")
 
-      .Call(hand_name, signum, PACKAGE = "signallR")
+      hand_code <- paste0(".Call(", hand_name,", ",signum,", PACKAGE = 'signallR')")
+      eval(str2lang(hand_code))
 
       checker_code <- paste0(
         "function(refresh) .Call(", check_name, ", refresh, PACKAGE = 'signallR')")
