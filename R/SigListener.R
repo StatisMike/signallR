@@ -7,15 +7,18 @@ SigListener <- R6::R6Class(
 
   public = list(
 
-    #' @field List containing cfuncs for checks
+    #' @field handlers Vector showing base
+    handlers = rep(FALSE, 5),
+
+    #' @field checkers List containing cfuncs for checks
     checkers = NULL,
 
-    #' @field Data.frame with available signals
+    #' @field SIGRTs Data.frame with available signals
     SIGRTs = NULL,
 
     initialize = function() {
 
-      self$SIGRTs <- get_SIGRTs()
+      self$SIGRTs <- SIGRT_get_int()
 
       # initialize checkers list
       self$checkers <- vector(mode = "list", length = nrow(self$SIGRTs))
@@ -23,10 +26,43 @@ SigListener <- R6::R6Class(
 
     },
 
+    #' @description Get first empty base handler
+    get_empty_handler = function() {
+
+      if (sum(self$handlers) != 5)
+        return(min(which(self$handlers == FALSE)))
+      else
+        return(NULL)
+
+    },
+
+    #' @description Register new base handler
+    #' @param i number of handler that should be registered
+    #' @param signum signal number to register handler for
+    register_check = function(i, signum) {
+
+      hand_name <- paste0(".C_R_reg_listener_base", i)
+      check_name <- paste0(".C_R_sig_checker_base", i)
+
+      .Call(hand_name, signum, PACKAGE = "signallR")
+
+      checker_code <- paste0(
+        "function(refresh) .Call(", check_name, ", refresh, PACKAGE = 'signallR')")
+
+      self$checkers[[as.character(signum)]] <-
+        eval(str2lang(checker_code))
+
+      self$handlers[i] <- TRUE
+
+    },
+
     #' @description Create checker for provided signum
     #' @param signum integer for signum
 
-    register_check = function(signum) {
+    register_add_check = function(signum) {
+
+      if (!requireNamespace("inline", quietly = T))
+        stop("To register more than 5 SIGRT listeners please install 'inline' package.")
 
       signum <- as.character(signum)
 

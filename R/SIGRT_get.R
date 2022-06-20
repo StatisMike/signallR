@@ -1,9 +1,5 @@
-#' @title Available SIGRTs
-#' @description Data.frame containing all available Real-Time UNIX signals:
-#' their number as well as their name as "SIGRTMIN" and "SIGRTMAX"
-#' @return data.frame
-#' @export
-get_SIGRTs <- function() {
+#' @noRd
+SIGRT_get_int <- function() {
 
   avail_SIGRTs <- data.frame(nums = .Call(.C_R_getValidSigrts,
                                           PACKAGE = "signallR"))
@@ -24,5 +20,18 @@ get_SIGRTs <- function() {
     avail_SIGRTs[["SIGRTMAX"]][nrow(avail_SIGRTs):1]
 
   return(avail_SIGRTs)
+
+}
+
+#' @title Get data about available SIGRTs
+#' @description Data.frame containing all available Real-Time UNIX signals:
+#' their number as well as their name as "SIGRTMIN" and "SIGRTMAX"
+#' @return data.frame
+#' @export
+SIGRT_get <- function() {
+
+  init_listener()
+
+  signallR_env$sigListener$SIGRTs
 
 }

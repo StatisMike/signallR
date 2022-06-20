@@ -1,6 +1,6 @@
 Package: signallR
 Title: Send and receive available SIGRT signals in R process
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person("Michal", "Kosinski", , "statismike@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
@@ -10,5 +10,5 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 NeedsCompilation: yes
 RoxygenNote: 7.1.2
-Imports:
+Suggests:
     inline

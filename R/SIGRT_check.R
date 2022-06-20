@@ -27,8 +27,18 @@ SIGRT_listen <- function(signal) {
   if (!is.null(signallR_env$sigListener$checkers[[signum]]))
     return(FALSE)
 
-  signallR_env$sigListener$register_check(signum)
-  signallR_env$sigListener$checkers[[signum]](1)
+  # check if any base handlers are available
+  i <- signallR_env$sigListener$get_empty_handler()
+
+  if (!is.null(i)) {
+    signallR_env$sigListener$register_check(i, signum)
+    message("Precompiled handler for signal '", signal, "' have been registered.")
+  } else {
+    signallR_env$sigListener$register_add_check(signum)
+    signallR_env$sigListener$checkers[[signum]](1)
+    message("Inline handler for signal '", signal, "' have been compiled and registered.")
+  }
+
   return(TRUE)
 
 }
