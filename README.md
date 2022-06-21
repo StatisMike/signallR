@@ -112,4 +112,37 @@ SIGRT_check("SIGRTMIN")
 #> [1] 0
 ```
 
-## WIP
+## Two-processes example
+
+``` r
+# parse command to run in another R process
+cmd <- paste0("R -e 'n <- 0; while (n < 5) { n <- n+1; Sys.sleep(5) ; signallR::SIGRT_send(\"SIGRTMAX-2\", ", Sys.getpid(), "L)}'")
+writeLines(cmd)
+#> R -e 'n <- 0; while (n < 5) { n <- n+1; Sys.sleep(5) ; signallR::SIGRT_send("SIGRTMAX-2", 9484L)}'
+
+# began listening for signal
+signallR::SIGRT_listen("SIGRTMAX-2")
+#> Precompiled handler for signal 'SIGRTMAX-2' have been registered.
+#> [1] TRUE
+no_signals <- signallR::SIGRT_check("SIGRTMAX-2", refresh = T)
+
+# run another R process
+system(cmd, wait = F, ignore.stdout = T)
+
+# check for 5 signals to come!
+while (no_signals < 5) {
+  
+  signal_in_run <- signallR::SIGRT_check("SIGRTMAX-2")
+  if (signal_in_run > no_signals) {
+    
+    writeLines(paste(format(Sys.time(), format = "%M:%OS4"), "Received signal!"))
+    no_signals <- signal_in_run
+    
+  }
+}
+#> 01:15.8302 Received signal!
+#> 01:20.8350 Received signal!
+#> 01:25.8390 Received signal!
+#> 01:30.8430 Received signal!
+#> 01:35.8478 Received signal!
+```
